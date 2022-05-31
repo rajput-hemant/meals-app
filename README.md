@@ -1,4 +1,9 @@
+![View Counter](https://komarev.com/ghpvc/?username=meals-app&label=View%20Counter&color=red&style=flat) &nbsp; &nbsp; ![Repo Size](https://img.shields.io/github/repo-size/rajput-hemant/meals-app?color=blue)
+
 # meals-app
+
+## About
+> 🍔 A flutter app that shows food categories with various meals in each category and full description of each meal.
 
 ## Building from Source
 
