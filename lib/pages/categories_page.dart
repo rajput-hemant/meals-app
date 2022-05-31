@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/dummy_data.dart';
-import '/widgets/category_item.dart';
+import '../widgets/category_item.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class CategoriesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daily Meals'),
+        centerTitle: true,
       ),
       body: GridView(
         padding: const EdgeInsets.all(20),
@@ -22,8 +23,8 @@ class CategoriesPage extends StatelessWidget {
           mainAxisExtent: 150,
         ),
         children: DUMMY_CATEGORIES
-            .map((catData) =>
-                CategoryItem(title: catData.title, color: catData.color))
+            .map((catData) => CategoryItem(
+                id: catData.id, title: catData.title, color: catData.color))
             .toList(),
       ),
     );
