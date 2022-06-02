@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'categories_page.dart';
 import 'favourites_page.dart';
+import '../widgets/main_drawer.dart';
 
 /// for tabs at the top
 class TabsPage extends StatefulWidget {
@@ -31,27 +32,29 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(_pages[_selectPageIndex]['title']),
         centerTitle: true,
       ),
+      drawer: const MainDrawer(),
       body: _pages[_selectPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
-        selectedItemColor: Theme.of(context).accentColor,
+        backgroundColor: theme.primaryColor,
+        selectedItemColor: theme.accentColor,
         unselectedItemColor: Colors.white,
         currentIndex: _selectPageIndex,
         // type: BottomNavigationBarType.shifting,
         items: const [
           BottomNavigationBarItem(
-            // backgroundColor: Theme.of(context).primaryColor,
+            // backgroundColor: theme.primaryColor,
             icon: Icon(Icons.category),
             label: 'Categories',
           ),
           BottomNavigationBarItem(
-            // backgroundColor: Theme.of(context).primaryColor,
+            // backgroundColor: theme.primaryColor,
             icon: Icon(Icons.favorite),
             label: 'Favourites',
           ),

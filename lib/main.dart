@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/categories_page.dart';
 import 'pages/meal_recipe_page.dart';
+import 'pages/filters_page.dart';
 import 'pages/meals_details_page.dart';
 import 'pages/tabs_page.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/': ((context) => const TabsPage()),
         MealsPage.routeName: (context) => const MealsPage(),
         RecipePage.routeName: (context) => const RecipePage(),
+        FiltersPage.routeName: ((context) => const FiltersPage()),
       },
       // this is used as a fallback mechanism when a requested route is not present in the route table
       // onGenerateRoute: (settings) {
