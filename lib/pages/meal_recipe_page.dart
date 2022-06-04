@@ -6,16 +6,18 @@ class RecipePage extends StatelessWidget {
   static const routeName = "/meal-recipe";
   const RecipePage({Key? key}) : super(key: key);
 
-  Widget buildSectionTitle(
-      {required BuildContext context, required String title}) {
+  Widget buildSectionTitle({
+    required String title,
+    required ThemeData theme,
+  }) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.headline6,
+      style: theme.textTheme.headline6,
     );
   }
 
   Widget buildContainer(
-      {required BuildContext context, required Widget child}) {
+      { required Widget child}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -31,6 +33,7 @@ class RecipePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final mealId = ModalRoute.of(context)?.settings.arguments as String;
     final selectMeal = DUMMY_MEALS.firstWhere(
       (meal) => meal.id == mealId,
@@ -54,13 +57,12 @@ class RecipePage extends StatelessWidget {
                 ),
               ),
             ),
-            buildSectionTitle(context: context, title: 'Ingredients'),
+            buildSectionTitle( title: 'Ingredients', theme: theme),
             buildContainer(
-              context: context,
               child: ListView.builder(
                 itemCount: selectMeal.ingredients.length,
                 itemBuilder: (context, index) => Card(
-                  color: Theme.of(context).accentColor,
+                  color: theme.accentColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text(
@@ -71,19 +73,18 @@ class RecipePage extends StatelessWidget {
                 ),
               ),
             ),
-            buildSectionTitle(context: context, title: 'Steps'),
+            buildSectionTitle( title: 'Steps', theme: theme),
             buildContainer(
-              context: context,
               child: ListView.builder(
                 itemCount: selectMeal.steps.length,
                 itemBuilder: (context, index) => Column(
                   children: [
                     ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: Theme.of(context).accentColor,
+                        backgroundColor: theme.accentColor,
                         child: Text(
                           '#${index + 1}',
-                          style: Theme.of(context).textTheme.headline6,
+                          style: theme.textTheme.headline6,
                         ),
                       ),
                       title: Text(selectMeal.steps[index]),
@@ -95,6 +96,10 @@ class RecipePage extends StatelessWidget {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.delete),
+        onPressed: () => Navigator.pop(context, mealId),
       ),
     );
   }
