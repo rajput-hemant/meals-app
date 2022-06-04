@@ -1,15 +1,52 @@
 import 'package:flutter/material.dart';
 
+import 'models/meals.dart';
 import 'pages/categories_page.dart';
 import 'pages/meal_recipe_page.dart';
 import 'pages/filters_page.dart';
 import 'pages/meals_details_page.dart';
 import 'pages/tabs_page.dart';
+import 'dummy_data.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false,
+  };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+
+  void _setFilters(Map<String, bool> filterData) {
+    setState(() {
+      _filters = filterData;
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['gluten']! && !meal.isGlutenFree) {
+          return false;
+        }
+        if (_filters['lactose']! && !meal.isLactoseFree) {
+          return false;
+        }
+        if (_filters['vegan']! && !meal.isVegan) {
+          return false;
+        }
+        if (_filters['vegetarian']! && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +74,11 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': ((context) => const TabsPage()),
-        MealsPage.routeName: (context) => const MealsPage(),
+        MealsPage.routeName: (context) =>
+            MealsPage(availableMeals: _availableMeals),
         RecipePage.routeName: (context) => const RecipePage(),
-        FiltersPage.routeName: ((context) => const FiltersPage()),
+        FiltersPage.routeName: ((context) =>
+            FiltersPage(currentFilters: _filters, saveFilters: _setFilters)),
       },
       // this is used as a fallback mechanism when a requested route is not present in the route table
       // onGenerateRoute: (settings) {
