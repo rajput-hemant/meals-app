@@ -20,10 +20,10 @@ class _MealsPageState extends State<MealsPage> {
   List<Meal> displayedMeals = [];
   var _loadInitData = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   void didChangeDependencies() {
@@ -41,11 +41,11 @@ class _MealsPageState extends State<MealsPage> {
     super.didChangeDependencies();
   }
 
-  void _removeMeal(String mealId) {
-    setState(() {
-      displayedMeals.removeWhere((meal) => meal.id == mealId);
-    });
-  }
+  // void _removeMeal(String mealId) {
+  //   setState(() {
+  //     displayedMeals.removeWhere((meal) => meal.id == mealId);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _MealsPageState extends State<MealsPage> {
             duration: displayedMeals[index].duration,
             complexity: displayedMeals[index].complexity,
             affordability: displayedMeals[index].affordability,
-            removeItem: _removeMeal,
+            // removeItem: _removeMeal,
           );
         }),
       ),

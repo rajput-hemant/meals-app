@@ -8,7 +8,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeItem;
+  // final Function removeItem;
 
   const MealItem({
     super.key,
@@ -18,7 +18,7 @@ class MealItem extends StatelessWidget {
     required this.duration,
     required this.complexity,
     required this.affordability,
-    required this.removeItem,
+    // required this.removeItem,
   });
 
   void selectMeal(BuildContext context) {
@@ -26,9 +26,10 @@ class MealItem extends StatelessWidget {
       context,
       RecipePage.routeName,
       arguments: id,
-    ).then((value) {
-      if (value != null) removeItem(value);
-    });
+    );
+    // .then((value) {
+    //   if (value != null) removeItem(value);
+    // });
   }
 
   String get getComplexity {

@@ -26,26 +26,38 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  final List<Meal> _favouriteMeals = [];
 
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
       _availableMeals = DUMMY_MEALS.where((meal) {
-        if (_filters['gluten']! && !meal.isGlutenFree) {
-          return false;
-        }
-        if (_filters['lactose']! && !meal.isLactoseFree) {
-          return false;
-        }
-        if (_filters['vegan']! && !meal.isVegan) {
-          return false;
-        }
-        if (_filters['vegetarian']! && !meal.isVegetarian) {
-          return false;
-        }
+        if ((_filters['gluten']! && !meal.isGlutenFree) ||
+            (_filters['lactose']! && !meal.isLactoseFree) ||
+            (_filters['vegan']! && !meal.isVegan) ||
+            (_filters['vegetarian']! && !meal.isVegetarian)) return false;
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavourite(String mealId) {
+    final existingIndex =
+        _favouriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favouriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favouriteMeals
+            .add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isFavouriteMeal(String id) {
+    return _favouriteMeals.any((meal) => meal.id == id);
   }
 
   @override
@@ -73,10 +85,12 @@ class _MyAppState extends State<MyApp> {
             ),
       ),
       routes: {
-        '/': ((context) => const TabsPage()),
+        '/': ((context) => TabsPage(favoriteMeals: _favouriteMeals)),
         MealsPage.routeName: (context) =>
             MealsPage(availableMeals: _availableMeals),
-        RecipePage.routeName: (context) => const RecipePage(),
+        RecipePage.routeName: (context) => RecipePage(
+            toggleFavourite: _toggleFavourite,
+            isFavouriteMeal: _isFavouriteMeal),
         FiltersPage.routeName: ((context) =>
             FiltersPage(currentFilters: _filters, saveFilters: _setFilters)),
       },

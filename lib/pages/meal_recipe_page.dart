@@ -4,7 +4,13 @@ import '../dummy_data.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = "/meal-recipe";
-  const RecipePage({Key? key}) : super(key: key);
+  final Function toggleFavourite;
+  final Function isFavouriteMeal;
+
+  const RecipePage(
+      {super.key,
+      required this.toggleFavourite,
+      required this.isFavouriteMeal});
 
   Widget buildSectionTitle({
     required String title,
@@ -16,8 +22,7 @@ class RecipePage extends StatelessWidget {
     );
   }
 
-  Widget buildContainer(
-      { required Widget child}) {
+  Widget buildContainer({required Widget child}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -57,7 +62,7 @@ class RecipePage extends StatelessWidget {
                 ),
               ),
             ),
-            buildSectionTitle( title: 'Ingredients', theme: theme),
+            buildSectionTitle(title: 'Ingredients', theme: theme),
             buildContainer(
               child: ListView.builder(
                 itemCount: selectMeal.ingredients.length,
@@ -73,7 +78,7 @@ class RecipePage extends StatelessWidget {
                 ),
               ),
             ),
-            buildSectionTitle( title: 'Steps', theme: theme),
+            buildSectionTitle(title: 'Steps', theme: theme),
             buildContainer(
               child: ListView.builder(
                 itemCount: selectMeal.steps.length,
@@ -98,8 +103,12 @@ class RecipePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.delete),
-        onPressed: () => Navigator.pop(context, mealId),
+        // child: const Icon(Icons.delete),
+        // onPressed: () => Navigator.pop(context, mealId),
+        child: isFavouriteMeal(mealId)
+            ? const Icon(Icons.star)
+            :const  Icon(Icons.star_border),
+        onPressed: () => toggleFavourite(mealId),
       ),
     );
   }

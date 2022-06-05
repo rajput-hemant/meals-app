@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 
+import '../models/meals.dart';
 import 'categories_page.dart';
 import 'favourites_page.dart';
 import '../widgets/main_drawer.dart';
 
 /// for tabs at the top
 class TabsPage extends StatefulWidget {
-  const TabsPage({Key? key}) : super(key: key);
+  final List<Meal> favoriteMeals;
+
+  const TabsPage({super.key, required this.favoriteMeals});
 
   @override
   State<TabsPage> createState() => _TabsPageState();
 }
 
 class _TabsPageState extends State<TabsPage> {
-  final List<Map> _pages = const [
-    {
-      'title': 'Categories',
-      'page': CategoriesPage(),
-    },
-    {
-      'title': 'Favourites',
-      'page': FavouritesPage(),
-    },
-  ];
+  List<Map> _pages = [];
+
+  @override
+  void initState() {
+    _pages = [
+      {
+        'title': 'Categories',
+        'page': const CategoriesPage(),
+      },
+      {
+        'title': 'Favourites',
+        'page': FavouritesPage(favouriteMeals: widget.favoriteMeals),
+      },
+    ];
+    super.initState();
+  }
 
   int _selectPageIndex = 0;
-
   void _selectPage(int index) {
     setState(() => _selectPageIndex = index);
   }
@@ -55,7 +63,7 @@ class _TabsPageState extends State<TabsPage> {
           ),
           BottomNavigationBarItem(
             // backgroundColor: theme.primaryColor,
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.star),
             label: 'Favourites',
           ),
         ],
