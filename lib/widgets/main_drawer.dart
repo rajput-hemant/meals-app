@@ -35,7 +35,7 @@ class MainDrawer extends StatelessWidget {
             height: 120,
             width: double.infinity,
             padding: const EdgeInsets.all(20),
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.bottomCenter,
             color: Theme.of(context).primaryColor,
             child: Text(
               'Cooking Up!',
@@ -54,11 +54,26 @@ class MainDrawer extends StatelessWidget {
             icon: Icons.restaurant,
             tapHandler: () => Navigator.pushReplacementNamed(context, '/'),
           ),
+          const Divider(),
           buildListTile(
             title: 'Filters',
             icon: Icons.settings,
             tapHandler: () =>
                 Navigator.pushReplacementNamed(context, FiltersPage.routeName),
+          ),
+          const Divider(),
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Text(
+                'Made with ❤️ by rajput-hemant',
+                style: Theme.of(context).textTheme.bodyLarge,
+                textScaleFactor: 1.4,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
         ],
       ),

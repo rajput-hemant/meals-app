@@ -13,7 +13,7 @@ class FavouritesPage extends StatelessWidget {
     if (favouriteMeals.isEmpty) {
       return Center(
         child: Text(
-          'Your have no Favourite!\n    Start adding some.',
+          'You have no Favourite!\n    Start adding some.',
           style: Theme.of(context).textTheme.headline6,
         ),
       );
